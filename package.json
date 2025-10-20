@@ -1,0 +1,15 @@
+{
+  "name": "smk-documents-system",
+  "version": "1.0.0",
+  "description": "Система управления документами СМК и СМБПП",
+  "scripts": {
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend",
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev"
+  },
+  "keywords": ["smk", "documents", "management"],
+  "author": "Your Name",
+  "license": "MIT"
+}

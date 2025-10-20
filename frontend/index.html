@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перечень документов СМК и СМБПП АО "ПРОГРЕСС"</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Перечень документов Системы менеджмента качества и Системы менеджмента пищевой безопасности</h1>
+            <div class="subtitle">АО "ПРОГРЕСС" от 13.10.2025 г.</div>
+        </header>
+        
+        <div class="document-info">
+            <div>
+                Все документы представлены в актуальной редакции на 2025 год
+                <span class="sync-status" id="syncStatus">Загрузка...</span>
+            </div>
+            <div class="controls">
+                <button id="addRowBtn">Добавить строку</button>
+                <button id="exportBtn">Экспорт в CSV</button>
+                <button id="importBtn">Импорт из CSV</button>
+                <button id="refreshBtn">Обновить</button>
+            </div>
+        </div>
+        
+        <table id="documentsTable">
+            <thead>
+                <tr>
+                    <th class="number">№ п/п</th>
+                    <th class="case-number">№ дела</th>
+                    <th class="name">Наименование</th>
+                    <th class="code">Шифр</th>
+                    <th class="date">Дата утверждения</th>
+                    <th class="scope">Область действия документа/структурные подразделения</th>
+                    <th class="link">Ссылка на документ</th>
+                    <th class="actions">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Данные будут заполнены через JavaScript -->
+            </tbody>
+        </table>
+        
+        <footer>
+            АО "ПРОГРЕСС" • г. Липецк • 2025
+            <div class="server-info" id="serverInfo"></div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно для редактирования -->
+    <div class="edit-modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Редактирование документа</div>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editNumber">№ п/п *</label>
+                    <input type="text" id="editNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCaseNumber">№ дела</label>
+                    <input type="text" id="editCaseNumber">
+                </div>
+                <div class="form-group">
+                    <label for="editName">Наименование *</label>
+                    <textarea id="editName" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editCode">Шифр</label>
+                    <input type="text" id="editCode">
+                </div>
+                <div class="form-group">
+                    <label for="editDate">Дата утверждения</label>
+                    <input type="text" id="editDate">
+                </div>
+                <div class="form-group">
+                    <label for="editScope">Область действия документа/структурные подразделения</label>
+                    <textarea id="editScope"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editLink">Ссылка на документ</label>
+                    <input type="text" id="editLink">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" id="cancelEditBtn">Отмена</button>
+                    <button type="submit" id="saveEditBtn">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Скрытый input для импорта файлов -->
+    <input type="file" id="fileImport" accept=".csv" style="display: none;">
+
+    <script src="js/api.js"></script>
+    <script src="js/documentManager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
