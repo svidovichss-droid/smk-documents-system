@@ -1,645 +1,766 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
-<голова>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Перечень документов СМК и СМБПП — АО «ПРОГРЕСС»</title>
- <стиль>
-    * {
- box-sizezing: border-box;
-    }
- тело {
- font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, без засечек;
- цвет фона: #f8f9fa;
- цвет: #212529;
- маржа: 0;
- отступы: 16px;
- высота линии: 1.5;
-    }
- .контейнер {
-      max-width: 1400px;
- маржа: 0 авто;
- Предыстория: #fff;
- отступы: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    }
-    h1 {
- размер шрифта: 1.4rem;
- text-align: по центру;
- поле: 0 0 8px;
- цвет: #003366;
- толщина шрифта: 600;
-    }
- .заголовок-примечание {
- text-align: по центру;
- размер шрифта: 0.9rem;
- Цвет: #666;
-      margin-bottom: 20px;
-    }
-    .controls {
- дисплей: flex;
- justify-content: пространство между;
- align-items: по центру;
-      margin-bottom: 15px;
- flex-wrap: обертка;
-      gap: 10px;
-    }
- .поиск-бокс {
- отступы: 8 x 12 пикселей;
- граница: 1px сплошной #ddd;
-      border-radius: 4px;
- ширина: 250px;
- размер шрифта: 0.9rem;
-    }
-    .btn {
- отступы: 8 x 16 пикселей;
- фон: #003366;
- цвет: белый;
- граница: нет;
-      border-radius: 4px;
- курсор: указатель;
- размер шрифта: 0.9rem;
- переход: фон 0,2 с;
-    }
- .btn:наведение {
- фон: #002244;
-    }
- .btn-успех {
- Предыстория: #28a745;
-    }
- .btn-success:наведение {
- предыстория: #218838;
-    }
-    .btn-danger {
- Предыстория: #dc3545;
-    }
- .btn-danger:наведение {
- Предыстория: #c82333;
-    }
- .btn-предупреждение {
- Предыстория: #ffc107;
- цвет: #212529;
-    }
- .btn-warning:наведение {
- Предыстория: #e0a800;
-    }
-    .github-section {
- Предыстория: #f6f8fa;
- граница: 1px сплошной #e1e4e8;
-      border-radius: 6px;
- отступы: 15px;
-      margin-bottom: 20px;
-    }
-    .github-section h3 {
- поле: 0 0 10px 0;
- цвет: #003366;
-    }
-    .github-input {
- ширина: 100%;
- отступы: 8 x 12 пикселей;
- граница: 1px сплошной #ddd;
-      border-radius: 4px;
-      margin-bottom: 10px;
- размер шрифта: 0.9rem;
-    }
-    .github-status {
-      margin-top: 10px;
- отступы: 8px;
-      border-radius: 4px;
- размер шрифта: 0.9rem;
-    }
-    .status-success {
- Предыстория: #d4edda;
- цвет: #155724;
- граница: 1px сплошной #c3e6cb;
-    }
- .статус-ошибка {
- Предыстория: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-    .status-info {
-      background: #d1ecf1;
-      color: #0c5460;
-      border: 1px solid #bee5eb;
-    }
-    .gist-info {
-      background: #e7f3ff;
-      border: 1px solid #b3d9ff;
-      border-radius: 4px;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 0.85rem;
-    }
-    .table-wrapper {
-      overflow-x: auto;
-      width: 100%;
-      margin-top: 10px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-      min-width: 800px;
-    }
-    th,
-    td {
-      padding: 10px 12px;
-      text-align: left;
-      border-bottom: 1px solid #e0e0e0;
-      position: relative;
-    }
-    th {
-      background-color: #003366;
-      color: white;
-      position: sticky;
-      top: 0;
-      font-weight: 600;
-    }
-    tr:hover {
-      background-color: #f8fbff;
-    }
-    .editable {
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .editable:hover {
-      background-color: #e3f2fd;
-    }
-    .editable:focus {
-      outline: 2px solid #0d6efd;
-      background-color: #e3f2fd;
-    }
-    .link {
-      color: #0d6efd;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-    .physical {
-      color: #6c757d;
-      font-style: italic;
-    }
-    .note {
-      color: #adb5bd;
-      font-style: italic;
-    }
-    .save-notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.3s;
-      z-index: 1000;
-    }
-    .save-notification.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.2rem;
-      }
-      th,
-      td {
-        padding: 8px 10px;
-      }
-      table {
-        font-size: 0.8125rem;
-      }
-      .controls {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .search-box {
-        width: 100%;
-      }
-    }
-  </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конвейерный верификатор DataMatrix ISO 15415 (OpenCV)</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel: #1e293b;
+            --accent: #38bdf8;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 1rem;
+        }
+        .container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 1.2rem; }
+        h1 {
+            font-size: 1.6rem; font-weight: 600;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .controls {
+            display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+            background: var(--panel); padding: 0.8rem; border-radius: 0.8rem;
+        }
+        select, button, input[type="file"], input[type="text"] {
+            background: #334155; border: 1px solid #475569; color: var(--text);
+            border-radius: 0.4rem; padding: 0.5rem 0.8rem; font-size: 0.9rem;
+        }
+        button { background: var(--accent); color: #0f172a; font-weight: 600; border: none; cursor: pointer; }
+        button.secondary { background: #475569; color: var(--text); }
+        button:disabled { opacity: 0.4; cursor: not-allowed; }
+        #fileInput { padding: 0.45rem; }
+        #ipUrl { flex: 1; min-width: 180px; }
+        .viewfinder {
+            position: relative; background: #000; border-radius: 1rem; overflow: hidden;
+            aspect-ratio: 16/10; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        video, canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
+        #overlayBox {
+            position: absolute; border: 2px solid var(--accent); pointer-events: none;
+            box-shadow: 0 0 12px rgba(56,189,248,0.6); transition: all 0.15s linear;
+        }
+        .main-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 800px) { .main-panels { grid-template-columns: 1fr; } }
+        .panel { background: var(--panel); border-radius: 1rem; padding: 1.2rem; }
+        .grade-circle {
+            width: 4rem; height: 4rem; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;
+            margin: 0 auto 0.5rem; background: #334155; color: white;
+        }
+        .grade-A { background: #22c55e; } .grade-B { background: #84cc16; }
+        .grade-C { background: #eab308; color: #422006; } .grade-D { background: #f97316; }
+        .grade-F { background: #ef4444; }
+        .metric { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .metric span:first-child { color: var(--muted); }
+        .progress-bar { height: 4px; background: #334155; border-radius: 2px; margin-bottom: 0.5rem; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; border-radius: 2px; transition: width 0.4s; }
+        .data-output { word-break: break-all; font-family: monospace; background: #0f172a; padding: 0.5rem; border-radius: 0.5rem; max-height: 5rem; overflow-y: auto; }
+        .log-panel { max-height: 250px; overflow-y: auto; }
+        .log-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .log-table th { background: #334155; padding: 0.3rem; text-align: left; position: sticky; top: 0; }
+        .log-table td { padding: 0.3rem; border-bottom: 1px solid #334155; }
+        .log-table tr.pass { border-left: 3px solid #22c55e; }
+        .log-table tr.fail { border-left: 3px solid #ef4444; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Перечень документов СМК и СМБПП АО «ПРОГРЕСС»</h1>
-    <div class="header-note">по состоянию на <span id="current-date">13.10.2025</span></div>
-
-    <div class="github-section">
-      <h3>Синхронизация с GitHub Gist</h3>
-      <input type="text" id="github-token" class="github-input" placeholder="GitHub Personal Access Token (требуется разрешение gist)">
-      <div>
-        <button id="create-gist" class="btn btn-success">Создать новый Gist</button>
-        <button id="save-to-gist" class="btn btn-success">Сохранить в Gist</button>
-        <button id="load-from-gist" class="btn">Загрузить из Gist</button>
-        <button id="test-gist" class="btn btn-warning">Проверить Gist</button>
-      </div>
-      <div id="gist-info" class="gist-info" style="display: none;">
-        <strong>Текущий Gist:</strong> <span id="gist-url">не указан</span>
-        <br><small>ID: <span id="gist-id">не указан</span></small>
-      </div>
-      <div id="github-status" class="github-status" style="display: none;"></div>
-    </div>
-
+<div class="container">
+    <h1>📊 Конвейерный верификатор DataMatrix ISO 15415</h1>
     <div class="controls">
-      <input type="text" id="search" class="search-box" placeholder="Поиск по таблице...">
-      <div>
-        <button id="add-row" class="btn btn-success">Добавить строку</button>
-        <button id="reset-data" class="btn btn-danger">Сбросить данные</button>
-        <button id="export-data" class="btn">Экспорт в CSV</button>
-      </div>
+        <select id="sourceType">
+            <option value="webcam">Веб-камера (непрерывный)</option>
+            <option value="file">Файл изображения</option>
+            <option value="ip">Снимок по URL</option>
+        </select>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;">
+        <input type="text" id="ipUrl" placeholder="http://camera/snapshot.jpg" style="display:none;">
+        <button id="captureBtn">▶ Старт</button>
+        <button id="stopBtn" class="secondary" disabled>⏹ Стоп</button>
+        <span style="color:var(--muted); font-size:0.85rem;" id="statusMsg">Ожидание запуска</span>
+        <span style="color:var(--accent); font-size:0.85rem; margin-left:auto;" id="engineMsg"></span>
     </div>
 
-    <div class="table-wrapper">
-      <table id="documents-table">
-        <thead>
-          <tr>
-            <th>№ п/п</th>
-            <th>№ дела</th>
-            <th>Наименование</th>
-            <th>Шифр</th>
-            <th>Дата утверждения</th>
-            <th>Область действия / Подразделения</th>
-            <th>Ссылка на документ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Данные будут загружены через JavaScript -->
-        </tbody>
-      </table>
+    <div class="viewfinder" id="viewfinder">
+        <video id="video" autoplay playsinline muted style="display:none;"></video>
+        <canvas id="displayCanvas" style="display:none;"></canvas>
+        <div id="overlayBox" class="overlay-box" style="display:none;"></div>
     </div>
-  </div>
 
-  <div class="save-notification" id="save-notification">Изменения сохранены!</div>
+    <div class="main-panels">
+        <div class="panel">
+            <h3>🎯 Текущая проверка</h3>
+            <div id="gradeCircle" class="grade-circle">-</div>
+            <div id="gradeText" style="text-align:center; font-weight:600; margin-bottom:0.8rem;">Нет данных</div>
+            <div class="metric"><span>Декодирование</span><span id="decodeMetric">-</span></div>
+            <div class="metric"><span>Контраст символа SC</span><span id="scMetric">-</span></div>
+            <div class="progress-bar"><div id="scBar" class="progress-fill" style="background:var(--accent);"></div></div>
+            <div class="metric"><span>Модуляция MOD</span><span id="modMetric">-</span></div>
+            <div class="progress-bar"><div id="modBar" class="progress-fill" style="background:var(--accent);"></div></div>
+            <div class="metric"><span>Неравномерность осей AN</span><span id="anMetric">-</span></div>
+            <div class="progress-bar"><div id="anBar" class="progress-fill" style="background:var(--accent);"></div></div>
+            <div class="metric"><span>Повреждения шаблонов FPD</span><span id="fpdMetric">-</span></div>
+            <div class="progress-bar"><div id="fpdBar" class="progress-fill" style="background:var(--accent);"></div></div>
+            <div class="metric"><span>Неравномерность сетки GN</span><span id="gnMetric">-</span></div>
+            <div class="progress-bar"><div id="gnBar" class="progress-fill" style="background:var(--accent);"></div></div>
+            <div class="data-output" id="decodedData">—</div>
+        </div>
+        <div class="panel log-panel">
+            <h3>📋 Журнал проверок</h3>
+            <div style="overflow-x: auto;">
+                <table class="log-table" id="logTable">
+                    <thead>
+                        <tr><th>Время</th><th>Данные</th><th>Оценка</th><th>SC</th><th>MOD</th><th>AN</th><th>FPD</th><th>GN</th></tr>
+                    </thead>
+                    <tbody id="logBody"></tbody>
+                </table>
+            </div>
+            <div id="noLogMsg" style="color:var(--muted); text-align:center; margin-top:1rem;">Проверок пока нет</div>
+        </div>
+    </div>
+</div>
 
-  <script>
-    // Исходные данные таблицы
-    const initialData = [
-      {id: 1, caseNumber: '6', name: 'Политика в области качества и пищевой безопасности АО «ПРОГРЕСС»', code: '', date: '04.08.2025', scope: 'Все подразделения АО"ПРОГРЕСС", г. Липецк', link: '<a href="#" class="link">Ссылка</a>'},
-      {id: 2, caseNumber: '7', name: 'Руководство системы менеджмента безопасности пищевой продукции', code: '', date: '05.06.2025', scope: 'Руководители подразделений АО "ПРОГРЕСС", входящих в область СМБПП', link: '<a href="#" class="link">Ссылка</a>'},
-      // ... остальные данные из предыдущего примера
-      {id: 46, caseNumber: '6', name: 'Управление вносимыми изменениями в проект или процесс', code: '-', date: '03.09.2024', scope: 'Все подразделения АО"ПРОГРЕСС"', link: '<a href="#" class="link">ссылка</a>'}
-    ];
+<!-- Библиотеки -->
+<script src="https://unpkg.com/@zxing/library@0.20.0/umd/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<!-- OpenCV.js загружается асинхронно -->
+<script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady()" onerror="onOpenCvFail()"></script>
 
-    // Функции для работы с данными
-    function saveData() {
-      localStorage.setItem('progressDocuments', JSON.stringify(tableData));
-      showSaveNotification();
+<script>
+    // Глобальные переменные
+    let cvReady = false;
+    let analysisEngine = 'JS'; // 'opencv' или 'js'
+
+    function onOpenCvReady() {
+        cvReady = true;
+        analysisEngine = 'opencv';
+        document.getElementById('engineMsg').textContent = '⚙️ OpenCV активно';
+        console.log('OpenCV.js загружен');
     }
 
-    function loadData() {
-      const saved = localStorage.getItem('progressDocuments');
-      return saved ? JSON.parse(saved) : [...initialData];
+    function onOpenCvFail() {
+        cvReady = false;
+        analysisEngine = 'js';
+        document.getElementById('engineMsg').textContent = '⚙️ JS-режим (OpenCV не загружен)';
+        console.warn('OpenCV.js не загрузился, используется JavaScript');
     }
 
-    function resetData() {
-      if (confirm('Вы уверены, что хотите сбросить все изменения?')) {
-        localStorage.removeItem('progressDocuments');
-        tableData = [...initialData];
-        renderTable();
-      }
-    }
+    // Если скрипт выполняется до загрузки OpenCV, через 3 секунды принудительно считаем, что не загрузился
+    setTimeout(() => {
+        if (!cvReady && analysisEngine !== 'opencv') {
+            onOpenCvFail();
+        }
+    }, 3000);
 
-    function showSaveNotification() {
-      const notification = document.getElementById('save-notification');
-      notification.classList.add('show');
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 2000);
-    }
+    // Остальной код обернём в функцию, чтобы дождаться объявления cvReady
+    (function mainApp() {
+        // DOM элементы (как ранее)
+        const video = document.getElementById('video');
+        const displayCanvas = document.getElementById('displayCanvas');
+        const overlayBox = document.getElementById('overlayBox');
+        const sourceType = document.getElementById('sourceType');
+        const fileInput = document.getElementById('fileInput');
+        const ipUrlInput = document.getElementById('ipUrl');
+        const captureBtn = document.getElementById('captureBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const statusMsg = document.getElementById('statusMsg');
+        const logBody = document.getElementById('logBody');
+        const noLogMsg = document.getElementById('noLogMsg');
+        const gradeCircle = document.getElementById('gradeCircle');
+        const gradeText = document.getElementById('gradeText');
+        const decodeMetric = document.getElementById('decodeMetric');
+        const scMetric = document.getElementById('scMetric'), scBar = document.getElementById('scBar');
+        const modMetric = document.getElementById('modMetric'), modBar = document.getElementById('modBar');
+        const anMetric = document.getElementById('anMetric'), anBar = document.getElementById('anBar');
+        const fpdMetric = document.getElementById('fpdMetric'), fpdBar = document.getElementById('fpdBar');
+        const gnMetric = document.getElementById('gnMetric'), gnBar = document.getElementById('gnBar');
+        const decodedDataEl = document.getElementById('decodedData');
 
-    // GitHub Gists API функции
-    async function createNewGist() {
-      const token = document.getElementById('github-token').value;
-      
-      if (!token) {
-        showGitHubStatus('Введите GitHub Personal Access Token', 'error');
-        return;
-      }
-      
-      try {
-        showGitHubStatus('Создаем новый Gist...', 'info');
-        
-        const gistData = {
-          description: 'Документы СМК и СМБПП АО ПРОГРЕСС',
-          public: false,
-          files: {
-            'progress-documents.json': {
-              content: JSON.stringify(tableData, null, 2)
+        let codeReader = null, currentStream = null, activeMode = null;
+        let analysisCanvas = document.createElement('canvas');
+        let continuous = false;
+        let lastDecodedText = null;
+        let cooldownUntil = 0;
+        let logEntries = [];
+
+        // Общие функции интерфейса (как прежде)
+        function updateUIForMode() {
+            const mode = sourceType.value;
+            fileInput.style.display = mode === 'file' ? 'inline-block' : 'none';
+            ipUrlInput.style.display = mode === 'ip' ? 'inline-block' : 'none';
+            captureBtn.textContent = (mode === 'webcam') ? '▶ Старт непрерывного' : '📷 Захватить';
+        }
+        sourceType.addEventListener('change', updateUIForMode);
+        updateUIForMode();
+
+        function fullStop() {
+            if (codeReader) { try { codeReader.reset(); } catch(e){} codeReader = null; }
+            if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
+            continuous = false;
+            video.style.display = 'none'; video.srcObject = null;
+            displayCanvas.style.display = 'none';
+            overlayBox.style.display = 'none';
+            activeMode = null;
+            captureBtn.disabled = false;
+            stopBtn.disabled = true;
+            statusMsg.textContent = 'Остановлено';
+            resetCurrentResults();
+        }
+
+        function resetCurrentResults() {
+            gradeCircle.className = 'grade-circle'; gradeCircle.textContent = '-';
+            gradeText.textContent = 'Нет данных';
+            decodeMetric.textContent = '-';
+            scMetric.textContent = '-'; scBar.style.width = '0%';
+            modMetric.textContent = '-'; modBar.style.width = '0%';
+            anMetric.textContent = '-'; anBar.style.width = '0%';
+            fpdMetric.textContent = '-'; fpdBar.style.width = '0%';
+            gnMetric.textContent = '-'; gnBar.style.width = '0%';
+            decodedDataEl.textContent = '—';
+        }
+
+        function addLogEntry(data, grade, metrics) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            logEntries.push({ time: timeStr, data, grade, metrics });
+            const row = document.createElement('tr');
+            row.className = (grade === 'A' || grade === 'B') ? 'pass' : 'fail';
+            row.innerHTML = `
+                <td>${timeStr}</td>
+                <td style="max-width:120px; overflow:hidden; text-overflow:ellipsis;" title="${data}">${data}</td>
+                <td><strong>${grade}</strong></td>
+                <td>${(metrics.sc*100).toFixed(0)}%</td>
+                <td>${(metrics.mod*100).toFixed(0)}%</td>
+                <td>${(metrics.an*100).toFixed(0)}%</td>
+                <td>${(metrics.fpd*100).toFixed(0)}%</td>
+                <td>${(metrics.gn*100).toFixed(0)}%</td>
+            `;
+            logBody.prepend(row);
+            noLogMsg.style.display = 'none';
+            if (logEntries.length > 50) {
+                logBody.removeChild(logBody.lastChild);
+                logEntries.shift();
             }
-          }
-        };
-        
-        const response = await fetch('https://api.github.com/gists', {
-          method: 'POST',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(gistData)
-        });
-        
-        if (response.ok) {
-          const gist = await response.json();
-          // Сохраняем информацию о gist
-          localStorage.setItem('githubToken', token);
-          localStorage.setItem('gistId', gist.id);
-          localStorage.setItem('gistUrl', gist.html_url);
-          
-          updateGistInfo(gist.id, gist.html_url);
-          showGitHubStatus('Новый Gist успешно создан!', 'success');
-        } else {
-          const error = await response.json();
-          showGitHubStatus(`Ошибка: ${error.message}`, 'error');
         }
-      } catch (error) {
-        showGitHubStatus(`Ошибка подключения: ${error.message}`, 'error');
-      }
-    }
 
-    async function saveToGist() {
-      const token = document.getElementById('github-token').value;
-      const gistId = localStorage.getItem('gistId');
-      
-      if (!token) {
-        showGitHubStatus('Введите GitHub Personal Access Token', 'error');
-        return;
-      }
-      
-      if (!gistId) {
-        showGitHubStatus('Сначала создайте Gist', 'error');
-        return;
-      }
-      
-      try {
-        showGitHubStatus('Сохраняем данные в Gist...', 'info');
-        
-        const gistData = {
-          description: `Документы СМК и СМБПП АО ПРОГРЕСС - обновлено ${new Date().toLocaleDateString('ru-RU')}`,
-          files: {
-            'progress-documents.json': {
-              content: JSON.stringify(tableData, null, 2)
+        function onScanSuccess(result) {
+            if (!result || !result.resultPoints || result.resultPoints.length < 4) return;
+            const text = result.text;
+            const now = Date.now();
+            if (continuous && text === lastDecodedText && now < cooldownUntil) return;
+            lastDecodedText = text;
+            cooldownUntil = now + 1500;
+            const points = result.resultPoints;
+            drawOverlay(points);
+            let imageSource;
+            if (activeMode === 'webcam') imageSource = video;
+            else imageSource = displayCanvas;
+            if (!imageSource) return;
+            analysisCanvas.width = imageSource.videoWidth || imageSource.width;
+            analysisCanvas.height = imageSource.videoHeight || imageSource.height;
+            const ctx = analysisCanvas.getContext('2d');
+            ctx.drawImage(imageSource, 0, 0);
+            analyzeQuality(analysisCanvas, points, text);
+        }
+
+        function drawOverlay(points) {
+            const vf = document.getElementById('viewfinder');
+            const vw = vf.clientWidth, vh = vf.clientHeight;
+            let imgW, imgH;
+            if (activeMode === 'webcam') { imgW = video.videoWidth; imgH = video.videoHeight; }
+            else { imgW = displayCanvas.width; imgH = displayCanvas.height; }
+            const scaleX = vw / imgW, scaleY = vh / imgH;
+            const xs = points.map(p => p.x * scaleX);
+            const ys = points.map(p => p.y * scaleY);
+            overlayBox.style.display = 'block';
+            overlayBox.style.left = Math.min(...xs) + 'px';
+            overlayBox.style.top = Math.min(...ys) + 'px';
+            overlayBox.style.width = (Math.max(...xs) - Math.min(...xs)) + 'px';
+            overlayBox.style.height = (Math.max(...ys) - Math.min(...ys)) + 'px';
+        }
+
+        // ================== Анализ (версии JS и OpenCV) ==================
+        // JS-алгоритмы (полностью из предыдущей версии, оставлены для fallback)
+        function orderPoints(points) {
+            const center = points.reduce((s, p) => ({x: s.x + p.x/points.length, y: s.y + p.y/points.length}), {x:0, y:0});
+            const sorted = [...points].sort((a,b) => Math.atan2(a.y - center.y, a.x - center.x) - Math.atan2(b.y - center.y, b.x - center.x));
+            const sums = sorted.map(p => p.x + p.y);
+            const minIdx = sums.indexOf(Math.min(...sums));
+            const ordered = [...sorted.slice(minIdx), ...sorted.slice(0, minIdx)];
+            if (ordered[1].x < ordered[0].x) [ordered[1], ordered[3]] = [ordered[3], ordered[1]];
+            return ordered;
+        }
+
+        function solveHomography(src, dst) {
+            const A = [], b = [];
+            for (let i = 0; i < 4; i++) {
+                const x = src[i].x, y = src[i].y, u = dst[i].x, v = dst[i].y;
+                A.push([x, y, 1, 0, 0, 0, -u*x, -u*y]); b.push(u);
+                A.push([0, 0, 0, x, y, 1, -v*x, -v*y]); b.push(v);
             }
-          }
-        };
-        
-        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(gistData)
-        });
-        
-        if (response.ok) {
-          showGitHubStatus('Данные успешно сохранены в Gist!', 'success');
-        } else {
-          const error = await response.json();
-          showGitHubStatus(`Ошибка: ${error.message}`, 'error');
+            const n = 8;
+            for (let i = 0; i < n; i++) {
+                let max = Math.abs(A[i][i]), maxRow = i;
+                for (let j = i+1; j < n; j++) if (Math.abs(A[j][i]) > max) { max = Math.abs(A[j][i]); maxRow = j; }
+                if (max < 1e-10) return null;
+                if (maxRow !== i) { [A[i], A[maxRow]] = [A[maxRow], A[i]]; [b[i], b[maxRow]] = [b[maxRow], b[i]]; }
+                for (let j = i+1; j < n; j++) {
+                    const factor = A[j][i] / A[i][i];
+                    for (let k = i; k < n; k++) A[j][k] -= factor * A[i][k];
+                    b[j] -= factor * b[i];
+                }
+            }
+            const h = new Array(n);
+            for (let i = n-1; i >= 0; i--) {
+                h[i] = b[i] / A[i][i];
+                for (let j = i-1; j >= 0; j--) b[j] -= A[j][i] * h[i];
+            }
+            return [[h[0], h[1], h[2]], [h[3], h[4], h[5]], [h[6], h[7], 1]];
         }
-      } catch (error) {
-        showGitHubStatus(`Ошибка подключения: ${error.message}`, 'error');
-      }
-    }
 
-    async function loadFromGist() {
-      const token = document.getElementById('github-token').value;
-      const gistId = localStorage.getItem('gistId');
-      
-      if (!token) {
-        showGitHubStatus('Введите GitHub Personal Access Token', 'error');
-        return;
-      }
-      
-      if (!gistId) {
-        showGitHubStatus('Сначала создайте Gist', 'error');
-        return;
-      }
-      
-      try {
-        showGitHubStatus('Загружаем данные из Gist...', 'info');
-        
-        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
-        });
-        
-        if (response.ok) {
-          const gist = await response.json();
-          const content = gist.files['progress-documents.json'].content;
-          tableData = JSON.parse(content);
-          renderTable();
-          saveData(); // Сохраняем в localStorage
-          showGitHubStatus('Данные успешно загружены из Gist!', 'success');
-        } else {
-          const error = await response.json();
-          showGitHubStatus(`Ошибка: ${error.message}`, 'error');
+        function applyHomography(H, x, y) {
+            const w = H[2][0]*x + H[2][1]*y + H[2][2];
+            return { x: (H[0][0]*x + H[0][1]*y + H[0][2])/w, y: (H[1][0]*x + H[1][1]*y + H[1][2])/w };
         }
-      } catch (error) {
-        showGitHubStatus(`Ошибка подключения: ${error.message}`, 'error');
-      }
-    }
 
-    async function testGistConnection() {
-      const token = document.getElementById('github-token').value;
-      const gistId = localStorage.getItem('gistId');
-      
-      if (!token) {
-        showGitHubStatus('Введите GitHub Personal Access Token', 'error');
-        return;
-      }
-      
-      if (!gistId) {
-        showGitHubStatus('Сначала создайте Gist', 'error');
-        return;
-      }
-      
-      try {
-        showGitHubStatus('Проверяем подключение к Gist...', 'info');
-        
-        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
-        });
-        
-        if (response.ok) {
-          showGitHubStatus('Подключение к Gist успешно!', 'success');
-        } else {
-          const error = await response.json();
-          showGitHubStatus(`Ошибка: ${error.message}`, 'error');
+        function warpPerspectiveJS(imageData, srcW, srcH, srcQuad, dstSize) {
+            const src = orderPoints(srcQuad);
+            const dst = [{x:0,y:0},{x:dstSize-1,y:0},{x:dstSize-1,y:dstSize-1},{x:0,y:dstSize-1}];
+            const H = solveHomography(dst, src);
+            if (!H) return null;
+            const out = new Uint8ClampedArray(dstSize * dstSize * 4);
+            for (let y = 0; y < dstSize; y++) {
+                for (let x = 0; x < dstSize; x++) {
+                    const p = applyHomography(H, x, y);
+                    const sx = p.x, sy = p.y;
+                    if (sx < 1 || sx >= srcW-2 || sy < 1 || sy >= srcH-2) continue;
+                    const x0 = Math.floor(sx), y0 = Math.floor(sy);
+                    const dx = sx - x0, dy = sy - y0;
+                    const idx0 = (y0 * srcW + x0) * 4, idx1 = idx0 + 4, idx2 = idx0 + srcW*4, idx3 = idx2 + 4;
+                    for (let c = 0; c < 3; c++) {
+                        out[(y*dstSize + x)*4 + c] = (1-dx)*(1-dy)*imageData.data[idx0+c] + dx*(1-dy)*imageData.data[idx1+c] + (1-dx)*dy*imageData.data[idx2+c] + dx*dy*imageData.data[idx3+c];
+                    }
+                    out[(y*dstSize + x)*4 + 3] = 255;
+                }
+            }
+            return new ImageData(out, dstSize, dstSize);
         }
-      } catch (error) {
-        showGitHubStatus(`Ошибка подключения: ${error.message}`, 'error');
-      }
-    }
 
-    function updateGistInfo(gistId, gistUrl) {
-      document.getElementById('gist-id').textContent = gistId;
-      document.getElementById('gist-url').innerHTML = `<a href="${gistUrl}" target="_blank" class="link">${gistUrl}</a>`;
-      document.getElementById('gist-info').style.display = 'block';
-    }
+        function imageDataToGray(imageData) {
+            const gray = new Float32Array(imageData.width * imageData.height);
+            const data = imageData.data;
+            for (let i = 0; i < gray.length; i++) gray[i] = 0.299*data[i*4] + 0.587*data[i*4+1] + 0.114*data[i*4+2];
+            return gray;
+        }
 
-    function showGitHubStatus(message, type) {
-      const statusEl = document.getElementById('github-status');
-      statusEl.textContent = message;
-      statusEl.className = `github-status status-${type}`;
-      statusEl.style.display = 'block';
-    }
+        function estimateModuleSize(gray, size) {
+            const projX = new Float32Array(size);
+            for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) projX[x] += gray[y*size+x];
+            const mean = projX.reduce((a,b)=>a+b)/size;
+            for (let i=0;i<size;i++) projX[i] -= mean;
+            let bestLag = 0, bestCorr = -Infinity;
+            for (let lag = 5; lag < size/2; lag++) {
+                let corr = 0;
+                for (let i=0; i<size-lag; i++) corr += projX[i] * projX[i+lag];
+                if (corr > bestCorr) { bestCorr = corr; bestLag = lag; }
+            }
+            return bestLag > 0 ? bestLag : 10;
+        }
 
-    // Рендеринг таблицы
-    let tableData = loadData();
+        function detectMatrixSize(gray, size) {
+            const leftCol = new Float32Array(size), bottomRow = new Float32Array(size);
+            for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+                if (x === 0) leftCol[y] = gray[y*size + x];
+                if (y === size-1) bottomRow[x] = gray[y*size + x];
+            }
+            const findModule = (profile) => {
+                const minVal = Math.min(...profile), maxVal = Math.max(...profile);
+                const thr = (minVal + maxVal) / 2;
+                const transitions = [];
+                for (let i = 1; i < profile.length; i++) {
+                    if ((profile[i-1] < thr && profile[i] >= thr) || (profile[i-1] >= thr && profile[i] < thr)) transitions.push(i);
+                }
+                if (transitions.length < 4) return 0;
+                return transitions[1] - transitions[0];
+            };
+            const modLeft = findModule(leftCol), modBottom = findModule(bottomRow);
+            const modEst = (modLeft + modBottom) / 2;
+            if (modEst < 3 || modEst > size/2) return 0;
+            const rawModules = Math.round(size / modEst);
+            const validSizes = [10,12,14,16,18,20,22,24,26,32,36,40,44,48,52,64,72,80,88,96,104,120,132,144];
+            return validSizes.reduce((prev, cur) => Math.abs(cur - rawModules) < Math.abs(prev - rawModules) ? cur : prev);
+        }
 
-    function renderTable(filteredData = null) {
-      const tbody = document.querySelector('#documents-table tbody');
-      const dataToRender = filteredData || tableData;
-      
-      tbody.innerHTML = '';
-      
-      dataToRender.forEach((row, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="editable" contenteditable="true" data-field="id">${row.id}</td>
-          <td class="editable" contenteditable="true" data-field="caseNumber">${row.caseNumber}</td>
-          <td class="editable" contenteditable="true" data-field="name">${row.name}</td>
-          <td class="editable" contenteditable="true" data-field="code">${row.code}</td>
-          <td class="editable" contenteditable="true" data-field="date">${row.date}</td>
-          <td class="editable" contenteditable="true" data-field="scope">${row.scope}</td>
-          <td>${row.link}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      
-      // Добавляем обработчики событий для редактируемых ячеек
-      document.querySelectorAll('.editable').forEach(cell => {
-        cell.addEventListener('blur', handleCellEdit);
-        cell.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            this.blur();
-          }
+        function computeSC(gray, size) {
+            const sorted = Array.from(gray).sort((a,b)=>a-b);
+            const lowCount = Math.max(1, Math.floor(size*size*0.1));
+            const lowAvg = sorted.slice(0, lowCount).reduce((a,b)=>a+b)/lowCount;
+            const highAvg = sorted.slice(-lowCount).reduce((a,b)=>a+b)/lowCount;
+            return Math.max(0, Math.min(1, (highAvg - lowAvg) / 255));
+        }
+
+        function computeMOD(gray, size, gridSize, modulePx) {
+            let bestX = 0, bestY = 0, minSum = Infinity;
+            for (let dy = 0; dy < modulePx; dy++) {
+                for (let dx = 0; dx < modulePx; dx++) {
+                    let sum = 0;
+                    for (let r = 0; r < gridSize; r++) {
+                        const y = dy + r * modulePx;
+                        if (y >= size) continue;
+                        for (let c = 0; c < gridSize; c++) {
+                            const x = dx + c * modulePx;
+                            if (x >= size) continue;
+                            sum += gray[y * size + x];
+                        }
+                    }
+                    if (sum < minSum) { minSum = sum; bestX = dx; bestY = dy; }
+                }
+            }
+            const offsetX = bestX + modulePx/2;
+            const offsetY = bestY + modulePx/2;
+            const half = Math.max(1, Math.floor(modulePx * 0.25));
+            const cellMeans = [];
+            for (let r = 0; r < gridSize; r++) {
+                const row = [];
+                for (let c = 0; c < gridSize; c++) {
+                    let sum = 0, count = 0;
+                    const cx = Math.floor(offsetX + c * modulePx);
+                    const cy = Math.floor(offsetY + r * modulePx);
+                    for (let dy = -half; dy <= half; dy++) {
+                        for (let dx = -half; dx <= half; dx++) {
+                            const sx = cx + dx, sy = cy + dy;
+                            if (sx >= 0 && sx < size && sy >= 0 && sy < size) {
+                                sum += gray[sy * size + sx];
+                                count++;
+                            }
+                        }
+                    }
+                    row.push(count ? sum / count : 0);
+                }
+                cellMeans.push(row);
+            }
+            const sc = computeSC(gray, size);
+            const sorted = Array.from(gray).sort((a,b)=>a-b);
+            const lowCount = Math.max(1, Math.floor(size*size*0.1));
+            const lowAvg = sorted.slice(0, lowCount).reduce((a,b)=>a+b)/lowCount;
+            const highAvg = sorted.slice(-lowCount).reduce((a,b)=>a+b)/lowCount;
+            const threshold = (lowAvg + highAvg) / 2;
+            let minDiff = Infinity;
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize - 1; c++) {
+                    const v1 = cellMeans[r][c], v2 = cellMeans[r][c+1];
+                    if ((v1 < threshold && v2 >= threshold) || (v1 >= threshold && v2 < threshold)) {
+                        minDiff = Math.min(minDiff, Math.abs(v1 - v2));
+                    }
+                }
+            }
+            for (let r = 0; r < gridSize - 1; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const v1 = cellMeans[r][c], v2 = cellMeans[r+1][c];
+                    if ((v1 < threshold && v2 >= threshold) || (v1 >= threshold && v2 < threshold)) {
+                        minDiff = Math.min(minDiff, Math.abs(v1 - v2));
+                    }
+                }
+            }
+            if (minDiff === Infinity) return 0;
+            const globalContrast = highAvg - lowAvg;
+            if (globalContrast < 1) return 0;
+            return Math.min(1, Math.max(0, minDiff / globalContrast));
+        }
+
+        function computeAN(gray, size, modulePx) {
+            const gridSize = Math.round(size / modulePx);
+            const stepX = size / gridSize, stepY = size / gridSize;
+            return Math.min(stepX, stepY) / Math.max(stepX, stepY);
+        }
+
+        function computeFPD(gray, size, gridSize, offsetX, offsetY, modulePx) {
+            const getVal = (r,c) => {
+                const cx = Math.floor(offsetX + c * modulePx);
+                const cy = Math.floor(offsetY + r * modulePx);
+                if (cx < 0 || cx >= size || cy < 0 || cy >= size) return 0;
+                return gray[cy*size + cx];
+            };
+            let errorsL = 0, totalL = 0;
+            for (let r = 0; r < gridSize; r++) { totalL++; if (getVal(r,0) > 128) errorsL++; }
+            for (let c = 0; c < gridSize; c++) { totalL++; if (getVal(gridSize-1, c) > 128) errorsL++; }
+            let errorsT = 0, totalT = 0;
+            for (let c = 1; c < gridSize-1; c++) {
+                totalT++;
+                const expected = (c % 2 === 0) ? 0 : 255;
+                const val = getVal(0,c);
+                if ((expected === 0 && val > 128) || (expected === 255 && val <= 128)) errorsT++;
+            }
+            for (let r = 1; r < gridSize-1; r++) {
+                totalT++;
+                const expected = (r % 2 === 0) ? 0 : 255;
+                const val = getVal(r, gridSize-1);
+                if ((expected === 0 && val > 128) || (expected === 255 && val <= 128)) errorsT++;
+            }
+            const fpdL = totalL ? 1 - errorsL/totalL : 1;
+            const fpdT = totalT ? 1 - errorsT/totalT : 1;
+            return Math.min(fpdL, fpdT);
+        }
+
+        function computeGN(gray, size, gridSize, offsetX, offsetY, modulePx) {
+            let maxDev = 0;
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cx = offsetX + c * modulePx;
+                    const cy = offsetY + r * modulePx;
+                    let sumX = 0, sumY = 0, sumW = 0;
+                    const half = modulePx/2;
+                    for (let dy = -half; dy <= half; dy++) {
+                        for (let dx = -half; dx <= half; dx++) {
+                            const sx = Math.floor(cx + dx), sy = Math.floor(cy + dy);
+                            if (sx < 0 || sx >= size || sy < 0 || sy >= size) continue;
+                            const w = 255 - gray[sy*size + sx];
+                            sumX += sx * w; sumY += sy * w; sumW += w;
+                        }
+                    }
+                    if (sumW > 0) {
+                        const realX = sumX / sumW, realY = sumY / sumW;
+                        maxDev = Math.max(maxDev, Math.hypot(realX - cx, realY - cy));
+                    }
+                }
+            }
+            const normDev = maxDev / modulePx;
+            return Math.max(0, 1 - normDev * 0.5);
+        }
+
+        function overallGrade(sc, mod, an, fpd, gn) {
+            const minVal = Math.min(sc, mod, an, fpd, gn);
+            if (minVal >= 0.8) return 'A';
+            if (minVal >= 0.6) return 'B';
+            if (minVal >= 0.4) return 'C';
+            if (minVal >= 0.2) return 'D';
+            return 'F';
+        }
+
+        // OpenCV-анализ
+        function analyzeWithOpenCV(imageData, srcPoints, text) {
+            // Реализация с использованием cv
+            try {
+                const srcMat = cv.matFromImageData(imageData);
+                // Переводим точки в массив [x,y]
+                const srcPts = orderPoints(srcPoints).map(p => [p.x, p.y]);
+                // Целевые точки для warp'а
+                const dstSize = 300;
+                const dstPts = [[0,0],[dstSize-1,0],[dstSize-1,dstSize-1],[0,dstSize-1]];
+                const M = cv.getPerspectiveTransform(cv.matFromArray(4,1,cv.CV_32FC2,srcPts.flat()),
+                                                   cv.matFromArray(4,1,cv.CV_32FC2,dstPts.flat()));
+                const warped = new cv.Mat();
+                cv.warpPerspective(srcMat, warped, M, new cv.Size(dstSize, dstSize));
+                srcMat.delete(); M.delete();
+
+                // В оттенки серого
+                const grayMat = new cv.Mat();
+                cv.cvtColor(warped, grayMat, cv.COLOR_RGBA2GRAY);
+                warped.delete();
+
+                const gray = new Float32Array(dstSize*dstSize);
+                for (let i = 0; i < gray.length; i++) gray[i] = grayMat.data[i];
+                const modulePx = estimateModuleSize(gray, dstSize);
+                const gridSize = detectMatrixSize(gray, dstSize);
+                if (!gridSize) {
+                    grayMat.delete();
+                    return updateFail('Не удалось определить размер матрицы');
+                }
+
+                // Поиск точного смещения с помощью cornerSubPix (L-паттерн)
+                // Упрощённо: ищем углы в левом верхнем углу и т.д.
+                // Здесь можно применить cv.find4QuadCornerSubpix, но для краткости используем тот же поиск offset, что в JS
+                const sc = computeSC(gray, dstSize);
+                const mod = computeMOD(gray, dstSize, gridSize, modulePx);
+                const an = computeAN(gray, dstSize, modulePx);
+                const offsetX = modulePx/2, offsetY = modulePx/2;
+                const fpd = computeFPD(gray, dstSize, gridSize, offsetX, offsetY, modulePx);
+                const gn = computeGN(gray, dstSize, gridSize, offsetX, offsetY, modulePx);
+                const grade = overallGrade(sc, mod, an, fpd, gn);
+                grayMat.delete();
+                return { sc, mod, an, fpd, gn, grade };
+            } catch(e) {
+                console.error('OpenCV analysis error:', e);
+                return null;
+            }
+        }
+
+        function analyzeQuality(canvas, srcPoints, text) {
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+            let result;
+            if (cvReady) {
+                result = analyzeWithOpenCV(imageData, srcPoints, text);
+            }
+            if (!result) {
+                // Fallback на JS
+                const ordered = orderPoints([...srcPoints]);
+                const warpSize = 300;
+                const warped = warpPerspectiveJS(imageData, canvas.width, canvas.height, ordered, warpSize);
+                if (!warped) { updateFail('Ошибка выравнивания'); return; }
+                const gray = imageDataToGray(warped);
+                const modulePx = estimateModuleSize(gray, warpSize);
+                if (!modulePx || modulePx < 3) { updateFail('Не определён размер модуля'); return; }
+                const gridSize = detectMatrixSize(gray, warpSize);
+                if (!gridSize) { updateFail('Не определён размер матрицы'); return; }
+                const sc = computeSC(gray, warpSize);
+                const mod = computeMOD(gray, warpSize, gridSize, modulePx);
+                const an = computeAN(gray, warpSize, modulePx);
+                const offsetX = modulePx/2, offsetY = modulePx/2;
+                const fpd = computeFPD(gray, warpSize, gridSize, offsetX, offsetY, modulePx);
+                const gn = computeGN(gray, warpSize, gridSize, offsetX, offsetY, modulePx);
+                const grade = overallGrade(sc, mod, an, fpd, gn);
+                result = { sc, mod, an, fpd, gn, grade };
+            }
+            updateCurrentResult(result.sc, result.mod, result.an, result.fpd, result.gn, result.grade, text);
+            addLogEntry(text, result.grade, { sc: result.sc, mod: result.mod, an: result.an, fpd: result.fpd, gn: result.gn });
+        }
+
+        function updateFail(reason) {
+            decodeMetric.textContent = 'Ошибка';
+            decodedDataEl.textContent = reason;
+            resetCurrentResults();
+        }
+
+        function updateCurrentResult(sc, mod, an, fpd, gn, grade, text) {
+            scMetric.textContent = (sc*100).toFixed(1)+'%'; scBar.style.width = (sc*100)+'%';
+            modMetric.textContent = (mod*100).toFixed(1)+'%'; modBar.style.width = (mod*100)+'%';
+            anMetric.textContent = (an*100).toFixed(1)+'%'; anBar.style.width = (an*100)+'%';
+            fpdMetric.textContent = (fpd*100).toFixed(1)+'%'; fpdBar.style.width = (fpd*100)+'%';
+            gnMetric.textContent = (gn*100).toFixed(1)+'%'; gnBar.style.width = (gn*100)+'%';
+            gradeCircle.textContent = grade;
+            gradeCircle.className = 'grade-circle grade-'+grade;
+            gradeText.textContent = `Оценка: ${grade}`;
+            decodeMetric.textContent = 'Успешно';
+            decodedDataEl.textContent = text;
+        }
+
+        // Режимы работы (без изменений, но с доп. проверками)
+        async function startContinuous() {
+            fullStop();
+            try {
+                currentStream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 } } });
+                video.srcObject = currentStream;
+                video.style.display = 'block';
+                await video.play();
+                activeMode = 'webcam';
+                continuous = true;
+                codeReader = new ZXing.BrowserDatamatrixCodeReader();
+                codeReader.decodeFromVideoDevice(null, video, (result, error) => {
+                    if (result && activeMode === 'webcam' && continuous) onScanSuccess(result);
+                });
+                captureBtn.disabled = true;
+                stopBtn.disabled = false;
+                statusMsg.textContent = '🔍 Непрерывный контроль активен';
+            } catch (e) {
+                alert('Ошибка доступа к веб-камере');
+                fullStop();
+            }
+        }
+
+        function captureFile(file) {
+            fullStop();
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.onload = () => {
+                displayCanvas.width = img.width; displayCanvas.height = img.height;
+                displayCanvas.getContext('2d').drawImage(img, 0, 0);
+                displayCanvas.style.display = 'block';
+                activeMode = 'file';
+                continuous = false;
+                decodeAndAnalyze(displayCanvas);
+                URL.revokeObjectURL(url);
+                captureBtn.disabled = true; stopBtn.disabled = false;
+            };
+            img.src = url;
+        }
+
+        function captureIP(url) {
+            fullStop();
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                displayCanvas.width = img.width; displayCanvas.height = img.height;
+                displayCanvas.getContext('2d').drawImage(img, 0, 0);
+                displayCanvas.style.display = 'block';
+                activeMode = 'ip';
+                continuous = false;
+                decodeAndAnalyze(displayCanvas);
+                captureBtn.disabled = true; stopBtn.disabled = false;
+            };
+            img.onerror = () => { statusMsg.textContent = 'Ошибка загрузки URL'; fullStop(); };
+            img.src = url;
+        }
+
+        function decodeAndAnalyze(sourceCanvas) {
+            // Пробуем сначала jsQR (он быстрее), затем ZXing
+            const ctx = sourceCanvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "dontInvert",
+            });
+            if (code && code.data) {
+                // jsQR не даёт точек углов DataMatrix? Он возвращает location
+                if (code.location && code.location.topLeftCorner && code.location.bottomLeftCorner) {
+                    const points = [
+                        code.location.topLeftCorner,
+                        code.location.topRightCorner,
+                        code.location.bottomRightCorner,
+                        code.location.bottomLeftCorner
+                    ];
+                    onScanSuccess({ text: code.data, resultPoints: points });
+                } else {
+                    statusMsg.textContent = 'jsQR: расположение не найдено';
+                }
+            } else {
+                // ZXing
+                try {
+                    const source = new ZXing.HTMLCanvasElementLuminanceSource(sourceCanvas);
+                    const bitmap = new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
+                    const reader = new ZXing.MultiFormatReader();
+                    const hints = new Map();
+                    hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
+                    const result = reader.decode(bitmap, hints);
+                    if (result && result.resultPoints && result.resultPoints.length >= 4) {
+                        onScanSuccess(result);
+                    } else {
+                        statusMsg.textContent = 'DataMatrix не найден';
+                        resetCurrentResults();
+                    }
+                } catch (e) {
+                    statusMsg.textContent = 'Ошибка декодирования';
+                    resetCurrentResults();
+                }
+            }
+        }
+
+        captureBtn.addEventListener('click', () => {
+            const mode = sourceType.value;
+            if (mode === 'webcam') startContinuous();
+            else if (mode === 'file') fileInput.click();
+            else if (mode === 'ip') {
+                const url = ipUrlInput.value.trim();
+                if (!url) { alert('Введите URL снимка'); return; }
+                captureIP(url);
+            }
         });
-      });
-    }
 
-    function handleCellEdit(e) {
-      const cell = e.target;
-      const rowIndex = Array.from(cell.parentNode.parentNode.children).indexOf(cell.parentNode);
-      const field = cell.getAttribute('data-field');
-      const newValue = cell.textContent.trim();
-      
-      tableData[rowIndex][field] = newValue;
-      saveData();
-    }
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) captureFile(e.target.files[0]);
+        });
 
-    function addNewRow() {
-      const newId = Math.max(...tableData.map(row => row.id)) + 1;
-      tableData.push({
-        id: newId,
-        caseNumber: '',
-        name: '',
-        code: '',
-        date: '',
-        scope: '',
-        link: '<a href="#" class="link">ссылка</a>'
-      });
-      renderTable();
-      saveData();
-      
-      // Фокус на первую ячейку новой строки
-      const lastRow = document.querySelector('#documents-table tbody tr:last-child');
-      if (lastRow) {
-        const firstCell = lastRow.querySelector('td');
-        firstCell.focus();
-      }
-    }
+        stopBtn.addEventListener('click', fullStop);
 
-    function exportToCSV() {
-      const headers = ['№ п/п', '№ дела', 'Наименование', 'Шифр', 'Дата утверждения', 'Область действия / Подразделения'];
-      const csvContent = [
-        headers.join(','),
-        ...tableData.map(row => [
-          row.id,
-          `"${row.caseNumber}"`,
-          `"${row.name}"`,
-          `"${row.code}"`,
-          `"${row.date}"`,
-          `"${row.scope}"`
-        ].join(','))
-      ].join('\n');
-      
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', 'документы_смк_смбпп.csv');
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function filterTable() {
-      const searchTerm = document.getElementById('search').value.toLowerCase();
-      if (!searchTerm) {
-        renderTable();
-        return;
-      }
-      
-      const filteredData = tableData.filter(row => 
-        Object.values(row).some(value => 
-          value.toString().toLowerCase().includes(searchTerm)
-        )
-      );
-      renderTable(filteredData);
-    }
-
-    // Инициализация
-    document.addEventListener('DOMContentLoaded', function() {
-      renderTable();
-      
-      // Загружаем сохраненные настройки
-      const savedToken = localStorage.getItem('githubToken');
-      const savedGistId = localStorage.getItem('gistId');
-      const savedGistUrl = localStorage.getItem('gistUrl');
-      
-      if (savedToken) document.getElementById('github-token').value = savedToken;
- if (savedGistId & & savedGistUrl) {
-        updateGistInfo(savedGistId, savedGistUrl);
-      }
-      
-      // Обработчики событий
- document.getElementById('add-row').addEventListener('щелчок', addNewRow);
-      document.getElementById('reset-data').addEventListener('click', resetData);
-      document.getElementById('export-data').addEventListener('click', exportToCSV);
-      document.getElementById('search').addEventListener('input', filterTable);
-      
- GitHub Gist обработчики
- document.getElementById('create-gist').addEventListener('щелчок', createNewGist);
-      document.getElementById('save-to-gist').addEventListener('click', saveToGist);
-      document.getElementById('load-from-gist').addEventListener('click', loadFromGist);
- document.getElementById('test-gist').addEventListener('щелчок', testGistConnection);
-      
-      // Обновляем дату
- const currentDate = новый Date();
-      const formattedDate = currentDate.toLocaleDateString('ru-RU');
-      document.getElementById('current-date').textContent = formattedDate;
-    });
- </скрипт>
-</тело>
+        fullStop();
+    })();
+</script>
+</body>
 </html>
