@@ -1011,22 +1011,84 @@
         }
 
         /**
-         * Извлечение сырых байтов из результата ZXing
+         * Извлечение сырых байтов из результата ZXing с максимальной совместимостью
          */
         function extractRawBytes(result) {
+            // Прямое извлечение rawBytes если доступно
             if (result && result.rawBytes) {
                 return Array.from(result.rawBytes);
             }
-            // Пытаемся получить байты через результат текста
-            if (result && result.text) {
+            
+            // Попытка получить байты через bits (BinaryBitmap)
+            if (result && result.resultPoints && result.text) {
+                // Для DataMatrix rawBytes могут быть недоступны напрямую
+                // Используем текст как fallback
                 const encoder = new TextEncoder();
                 return Array.from(encoder.encode(result.text));
             }
+            
             return null;
         }
 
+        /**
+         * Декодирование DataMatrix с использованием ZXing и последующей обработкой по ISO
+         * Возвращает объект с текстом, байтами и информацией о кодировке
+         */
+        function decodeDataMatrixWithISO(sourceCanvas) {
+            try {
+                const source = new ZXing.HTMLCanvasElementLuminanceSource(sourceCanvas);
+                const bitmap = new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
+                const reader = new ZXing.MultiFormatReader();
+                const hints = new Map();
+                
+                hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
+                
+                // Пробуем разные кодировки последовательно
+                const charsets = ['UTF-8', 'ISO-8859-1', 'CP437', 'CP850'];
+                let bestResult = null;
+                
+                for (const charset of charsets) {
+                    try {
+                        hints.set(ZXing.DecodeHintType.CHARACTER_SET, charset);
+                        const result = reader.decode(bitmap, hints);
+                        
+                        if (result && result.resultPoints && result.resultPoints.length >= 4) {
+                            const rawBytes = extractRawBytes(result);
+                            let decodedText = result.text;
+                            let encodingUsed = charset;
+                            
+                            // Если есть сырые байты, применяем ISO декодирование
+                            if (rawBytes && rawBytes.length > 0) {
+                                const isoDecoded = decodeDataMatrixBytes(rawBytes);
+                                if (isoDecoded && isoDecoded.trim().length > 0) {
+                                    decodedText = isoDecoded;
+                                    encodingUsed = 'ISO-16022';
+                                }
+                            }
+                            
+                            bestResult = {
+                                text: decodedText,
+                                rawBytes: rawBytes,
+                                encoding: encodingUsed,
+                                resultPoints: result.resultPoints,
+                                confidence: result.confidence || 1.0
+                            };
+                            break; // Нашли успешный результат
+                        }
+                    } catch (e) {
+                        continue; // Пробуем следующую кодировку
+                    }
+                }
+                
+                return bestResult;
+            } catch (e) {
+                console.error('ZXing decode error:', e);
+                return null;
+            }
+        }
+
         function decodeAndAnalyze(sourceCanvas) {
-            // Пробуем сначала jsQR (он быстрее), затем ZXing
+            // Пробуем сначала jsQR (он быстрее), затем новый ISO-декодер
             const ctx = sourceCanvas.getContext('2d');
             const imageData = ctx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
             const code = jsQR(imageData.data, imageData.width, imageData.height, {
@@ -1047,38 +1109,18 @@
                     statusMsg.textContent = 'jsQR: расположение не найдено';
                 }
             } else {
-                // ZXing - основной декодер с поддержкой ISO кодировок
-                try {
-                    const source = new ZXing.HTMLCanvasElementLuminanceSource(sourceCanvas);
-                    const bitmap = new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
-                    const reader = new ZXing.MultiFormatReader();
-                    const hints = new Map();
-                    hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
-                    // Важно: пробуем разные кодировки
-                    hints.set(ZXing.DecodeHintType.CHARACTER_SET, ['UTF-8', 'ISO-8859-1', 'CP437']);
-                    
-                    const result = reader.decode(bitmap, hints);
-                    if (result && result.resultPoints && result.resultPoints.length >= 4) {
-                        // Пытаемся получить сырые байты и декодировать по ISO стандарту
-                        const rawBytes = extractRawBytes(result);
-                        let decodedText = result.text;
-                        
-                        if (rawBytes && rawBytes.length > 0) {
-                            // Пробуем корректное декодирование по ISO/IEC 16022
-                            const isoDecoded = decodeDataMatrixBytes(rawBytes);
-                            if (isoDecoded && isoDecoded.trim().length > 0) {
-                                decodedText = isoDecoded;
-                            }
-                        }
-                        
-                        onScanSuccess({ text: decodedText, resultPoints: result.resultPoints, rawBytes: rawBytes });
-                    } else {
-                        statusMsg.textContent = 'DataMatrix не найден';
-                        resetCurrentResults();
-                    }
-                } catch (e) {
-                    console.error('ZXing decode error:', e);
-                    statusMsg.textContent = 'Ошибка декодирования: ' + e.message;
+                // Используем новый декодер с полной поддержкой ISO/IEC 16022
+                const result = decodeDataMatrixWithISO(sourceCanvas);
+                if (result && result.resultPoints && result.resultPoints.length >= 4) {
+                    onScanSuccess({ 
+                        text: result.text, 
+                        resultPoints: result.resultPoints, 
+                        rawBytes: result.rawBytes,
+                        encoding: result.encoding,
+                        confidence: result.confidence
+                    });
+                } else {
+                    statusMsg.textContent = 'DataMatrix не найден';
                     resetCurrentResults();
                 }
             }
