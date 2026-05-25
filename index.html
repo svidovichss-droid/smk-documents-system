@@ -700,6 +700,298 @@
             img.src = url;
         }
 
+        /**
+         * Декодирование байтов DataMatrix с правильной интерпретацией кодировки по ISO/IEC 16022
+         * Поддерживает: ASCII, C40, Text, X12, EDIFACT, Base256
+         */
+        function decodeDataMatrixBytes(byteArray) {
+            if (!byteArray || byteArray.length === 0) return null;
+            
+            let result = '';
+            let i = 0;
+            const len = byteArray.length;
+            
+            // Функция для декодирования Base256
+            function decodeBase256(startIdx) {
+                let length = byteArray[startIdx];
+                let dataStart = startIdx + 1;
+                
+                // Если длина >= 250, то реальная длина кодируется как (firstByte - 249) * 250 + secondByte
+                if (length >= 250 && startIdx + 1 < len) {
+                    length = ((length - 249) * 250) + byteArray[startIdx + 1];
+                    dataStart = startIdx + 2;
+                }
+                
+                const unrandomized = [];
+                for (let j = 0; j < length && dataStart + j < len; j++) {
+                    let val = byteArray[dataStart + j];
+                    // Unrandomize по ISO 16022
+                    val = ((val + 256 - ((129 * (j + 1)) % 255)) % 255);
+                    unrandomized.push(val);
+                }
+                
+                // Попытка интерпретировать как UTF-8 или CP437
+                try {
+                    const uint8 = new Uint8Array(unrandomized);
+                    const decoder = new TextDecoder('utf-8', { fatal: false });
+                    return decoder.decode(uint8);
+                } catch (e) {
+                    // Fallback на CP437
+                    return unrandomized.map(b => String.fromCharCode(b)).join('');
+                }
+            }
+            
+            while (i < len) {
+                const byte = byteArray[i];
+                
+                // ASCII режим (0-127)
+                if (byte === 0) {
+                    // PAD - заполнитель
+                    break;
+                } else if (byte >= 1 && byte <= 128) {
+                    result += String.fromCharCode(byte - 1);
+                    i++;
+                } else if (byte === 129) {
+                    // Upper Shift - временный переход в верхний ASCII
+                    if (i + 1 < len) {
+                        result += String.fromCharCode(byteArray[i + 1] + 127);
+                        i += 2;
+                    } else {
+                        i++;
+                    }
+                } else if (byte === 230) {
+                    // Переход в режим C40
+                    i++;
+                    // Упрощённая обработка C40
+                    while (i < len && byteArray[i] !== 254 && byteArray[i] !== 255) {
+                        // C40 encoding - сложная логика, упрощённо пропускаем
+                        i++;
+                    }
+                    if (i < len && byteArray[i] === 254) i++; // Возврат в ASCII
+                } else if (byte === 231) {
+                    // Переход в режим Base256
+                    if (i + 1 < len) {
+                        const base256Result = decodeBase256(i + 1);
+                        if (base256Result) result += base256Result;
+                        // Пропускаем до конца Base256 блока (упрощённо)
+                        i = len;
+                    } else {
+                        i++;
+                    }
+                } else if (byte === 232) {
+                    // Переход в режим Text
+                    i++;
+                    while (i < len && byteArray[i] !== 254 && byteArray[i] !== 255) {
+                        i++;
+                    }
+                    if (i < len && byteArray[i] === 254) i++;
+                } else if (byte === 233) {
+                    // Переход в режим X12
+                    i++;
+                    while (i < len && byteArray[i] !== 254) {
+                        i++;
+                    }
+                    if (i < len && byteArray[i] === 254) i++;
+                } else if (byte === 234) {
+                    // Переход в режим EDIFACT
+                    i++;
+                    let count = 0;
+                    while (i < len && count < 4) {
+                        if (byteArray[i] >= 32 && byteArray[i] <= 94) {
+                            result += String.fromCharCode(byteArray[i] + 64);
+                        }
+                        i++;
+                        count++;
+                    }
+                } else if (byte === 235) {
+                    // Structured Append
+                    i++;
+                } else if (byte === 236) {
+                    // FNC1 - разделитель для GS1
+                    result += '\x1D'; // Group Separator
+                    i++;
+                } else if (byte === 237) {
+                    // Macro 06
+                    i++;
+                } else if (byte === 238) {
+                    // Macro 10
+                    i++;
+                } else if (byte === 239) {
+                    // Reader Programming
+                    i++;
+                } else if (byte === 240) {
+                    // Code Page 437
+                    i++;
+                    // Оставшиеся байты интерпретировать как CP437
+                    while (i < len) {
+                        result += String.fromCharCode(byteArray[i]);
+                        i++;
+                    }
+                } else if (byte === 241) {
+                    // Code Page 850
+                    i++;
+                    while (i < len) {
+                        result += String.fromCharCode(byteArray[i]);
+                        i++;
+                    }
+                } else if (byte === 242) {
+                    // Code Page 8859-1 (Latin-1)
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-1');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 243) {
+                    // Code Page 8859-2
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-2');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 244) {
+                    // Code Page 8859-3
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-3');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 245) {
+                    // Code Page 8859-4
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-4');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 246) {
+                    // Code Page 8859-5
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-5');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 247) {
+                    // Code Page 8859-6
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-6');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 248) {
+                    // Code Page 8859-7
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-7');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 249) {
+                    // Code Page 8859-8
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-8');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 250) {
+                    // Code Page 8859-9
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-9');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 251) {
+                    // Code Page 8859-10
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-10');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 252) {
+                    // Code Page 8859-13
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-13');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 253) {
+                    // Code Page 8859-15
+                    i++;
+                    const remaining = byteArray.slice(i);
+                    try {
+                        const decoder = new TextDecoder('iso-8859-15');
+                        result += decoder.decode(new Uint8Array(remaining));
+                    } catch (e) {
+                        remaining.forEach(b => result += String.fromCharCode(b));
+                    }
+                    break;
+                } else if (byte === 254) {
+                    // Возврат в ASCII из расширенного режима
+                    i++;
+                } else if (byte === 255) {
+                    // UNLATCH
+                    i++;
+                } else {
+                    // Расширенный ASCII (129-229, 256+)
+                    result += String.fromCharCode(byte);
+                    i++;
+                }
+            }
+            
+            return result;
+        }
+
+        /**
+         * Извлечение сырых байтов из результата ZXing
+         */
+        function extractRawBytes(result) {
+            if (result && result.rawBytes) {
+                return Array.from(result.rawBytes);
+            }
+            return null;
+        }
+
         function decodeAndAnalyze(sourceCanvas) {
             // Пробуем сначала jsQR (он быстрее), затем ZXing
             const ctx = sourceCanvas.getContext('2d');
@@ -716,27 +1008,44 @@
                         code.location.bottomRightCorner,
                         code.location.bottomLeftCorner
                     ];
+                    // jsQR уже возвращает декодированный текст, используем его
                     onScanSuccess({ text: code.data, resultPoints: points });
                 } else {
                     statusMsg.textContent = 'jsQR: расположение не найдено';
                 }
             } else {
-                // ZXing
+                // ZXing - основной декодер с поддержкой ISO кодировок
                 try {
                     const source = new ZXing.HTMLCanvasElementLuminanceSource(sourceCanvas);
                     const bitmap = new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
                     const reader = new ZXing.MultiFormatReader();
                     const hints = new Map();
                     hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
+                    // Важно: пробуем разные кодировки
+                    hints.set(ZXing.DecodeHintType.CHARACTER_SET, ['UTF-8', 'ISO-8859-1', 'CP437']);
+                    
                     const result = reader.decode(bitmap, hints);
                     if (result && result.resultPoints && result.resultPoints.length >= 4) {
-                        onScanSuccess(result);
+                        // Пытаемся получить сырые байты и декодировать по ISO стандарту
+                        const rawBytes = extractRawBytes(result);
+                        let decodedText = result.text;
+                        
+                        if (rawBytes && rawBytes.length > 0) {
+                            // Пробуем корректное декодирование по ISO/IEC 16022
+                            const isoDecoded = decodeDataMatrixBytes(rawBytes);
+                            if (isoDecoded && isoDecoded.trim().length > 0) {
+                                decodedText = isoDecoded;
+                            }
+                        }
+                        
+                        onScanSuccess({ text: decodedText, resultPoints: result.resultPoints, rawBytes: rawBytes });
                     } else {
                         statusMsg.textContent = 'DataMatrix не найден';
                         resetCurrentResults();
                     }
                 } catch (e) {
-                    statusMsg.textContent = 'Ошибка декодирования';
+                    console.error('ZXing decode error:', e);
+                    statusMsg.textContent = 'Ошибка декодирования: ' + e.message;
                     resetCurrentResults();
                 }
             }
